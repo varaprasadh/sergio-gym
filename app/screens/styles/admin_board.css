@@ -1,0 +1,105 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background:#273c75;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+* {
+  font-size: 14px;
+}
+.card {
+  width:400px;
+  height:150px ;
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px silver;
+  padding: 25px;
+  margin: 10px;
+}
+.scard{
+   background-color: white;
+   border-radius: 5px;
+   box-shadow: 0 3px 3px silver;
+   padding: 25px;
+   padding-bottom: 10px;
+}
+
+.card input{
+  padding: 10px 10px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #2980b9;
+}
+.card input:focus {
+outline: none;
+}
+.submit {
+  background: #27ae60;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit:hover {
+  box-shadow: 2px 2px 10px black;
+}
+.cardlabel{
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #27ae60;
+  padding: 10px;
+}
+.user_section{
+  align-self: stretch;
+  flex: 1;
+  overflow-y: scroll;
+  padding: 10px;
+}
+.user_section::-webkit-scrollbar {
+  width:0;
+}
+.users{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 10px;
+  justify-content: center;
+}
+.label{
+  font-weight: bold;
+  color:#2980b9;
+  padding: 5px 10px;
+}
+.value{
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 5px 10px;
+  color: #2c3e50;
+}
+.userhead{
+ font-weight: bold;
+ font-size: 2em;
+ color:#fff;
+ padding: 10px;
+}
+.ctrl{
+  display: flex;
+  justify-content: flex-end;
+}
+.delete{
+  color: #e74c3c;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.delete:hover{
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 5px;
+}
