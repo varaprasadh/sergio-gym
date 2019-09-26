@@ -10,6 +10,8 @@ import LoginScreen from "../screens/LoginScreen";
 
 import Initializer from "../screens/Initializer";
 import AdminDashboard from "../screens/AdminDashboard";
+import CustomerDashboard from "../screens/CustomerDashboard";
+
 
 type Props = {
   store: Store,
@@ -35,7 +37,8 @@ export default class Root extends Component<Props> {
             />  
             {/* <LoginScreen/>   */}
             {/* <Initializer/>   */}
-            <AdminDashboard/>
+            {/* <AdminDashboard/> */}
+            <CustomerDashboard/> 
             {/* <Router path={routes.LOGIN}>  
         
                  <Switch path={routes.LOGIN}>
