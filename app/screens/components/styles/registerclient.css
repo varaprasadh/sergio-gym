@@ -3,6 +3,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
+    background: url("../../images/gym_register_bg.jpg");
+    background-size: cover;
 }
 
 .modal {
@@ -79,6 +81,10 @@ a.submit {
   font-size: 16px;
   margin-top: 60px;
   cursor: pointer;
+  filter: drop-shadow(3px 3px 5px green);
+}
+a.submit:hover{
+  filter:  drop-shadow(1px 1px 1px green);
 }
 .row{
     display: flex;
@@ -97,4 +103,29 @@ input[type="radio"]{
 .row label{
     color: #2980b9;
     font-weight: bold;
+}
+select{
+  border: none;
+  background: white;
+  width: 90%;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px 10px;
+  border: 1px solid #1fd086;
+  color: #021949;
+
+}
+select option{
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #194903;
+}
+.info{
+  margin-top:20px;
+  font-weight: bold;
+  color: #7f8c8d;
+}
+.expiredon{
+  color: #e74c3c;
 }
