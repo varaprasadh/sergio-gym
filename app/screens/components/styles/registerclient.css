@@ -5,6 +5,7 @@
     display: flex;
     background: url("../../images/gym_register_bg.jpg");
     background-size: cover;
+
 }
 
 .modal {
@@ -47,7 +48,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input::placeholder {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(2, 2, 2, 0.514);
   font-size: 16px;
   letter-spacing: 2px;
   font-family: 'Varela Round';
@@ -73,21 +74,23 @@ select:focus {
 
 a.submit {
   margin: 0 auto;
-  border-radius: 25px;
+  border-radius: 5px;
   border: 0;
   background-color: #1fd086;
   color: white;
   padding: 10px 30px;
   font-size: 16px;
-  margin-top: 60px;
+  margin-top: 20px;
   cursor: pointer;
   filter: drop-shadow(3px 3px 5px green);
+  font-weight: bold;
 }
 a.submit:hover{
   filter:  drop-shadow(1px 1px 1px green);
 }
 .row{
     display: flex;
+    align-items: center;
 }
 
 .gender{
@@ -103,6 +106,8 @@ input[type="radio"]{
 .row label{
     color: #2980b9;
     font-weight: bold;
+    padding: 10px;
+
 }
 select{
   border: none;
@@ -128,4 +133,22 @@ select option{
 }
 .expiredon{
   color: #e74c3c;
+}
+.profilepic_wrapper{
+  text-align: center;
+}
+.profilepic{
+  width:100px;
+  height:100px;
+  border-radius: 50%;
+}
+.upload_btn{
+  color: #1fd086;
+  background: #fff;
+  font-weight: bold;
+  padding:5px 10px;
+  cursor: pointer;
+}
+.upload_btn:hover{
+  text-decoration: underline;
 }

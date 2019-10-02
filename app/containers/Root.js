@@ -1,16 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import {BrowserRouter as Router,Switch, Route,Link} from "react-router-dom";
+// import {BrowserRouter as Router,Switch, Route,Link} from "react-router-dom";
 import type { Store } from '../reducers/types';
 import App from "./App";
 import routes from "../constants/routes";
 import {ToastContainer} from "react-toastify";
-import LoginScreen from "../screens/LoginScreen";
-
-import Initializer from "../screens/Initializer";
-import AdminDashboard from "../screens/AdminDashboard";
-import CustomerDashboard from "../screens/CustomerDashboard";
+import { ConnectedRouter} from 'connected-react-router';
+import { Switch, Route } from 'react-router-dom';
+import Routes from "./Routes";
 
 
 type Props = {
@@ -23,8 +21,9 @@ export default class Root extends Component<Props> {
     const { store, history } = this.props;
     return (
       <Provider store={store}>
-         <App>
-          <ToastContainer
+      <ConnectedRouter history={history}>
+            <div>
+              <ToastContainer
                 position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
@@ -35,10 +34,13 @@ export default class Root extends Component<Props> {
                 draggable
                 pauseOnHover
             />  
+            <Routes/>
+            </div>
+      </ConnectedRouter> 
             {/* <LoginScreen/>   */}
             {/* <Initializer/>   */}
             {/* <AdminDashboard/> */}
-            <CustomerDashboard/> 
+             
             {/* <Router path={routes.LOGIN}>  
         
                  <Switch path={routes.LOGIN}>
@@ -49,7 +51,7 @@ export default class Root extends Component<Props> {
                
             </Router> */}
 
-         </App>
+         
       </Provider>
     );
   }

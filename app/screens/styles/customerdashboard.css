@@ -1,3 +1,12 @@
+@font-face {
+  font-family: Lato;
+  src: url("../fonts/Lato/Lato-Black.ttf");
+}
+@font-face {
+  font-family: poppins;
+  src: url("../fonts/Poppins/Poppins-Black.ttf");
+}
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -5,11 +14,26 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  font-family: poppins;
 }
 .header{
-    background: #fff;
-    padding: 20px 20px;
+    padding: 30px 20px;
     box-shadow: 0px 5px 10px solid black;
+    display: flex;
+}
+.header_icon {
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  font-family: Lato;
+  font-size: 30px;
+}
+
+.header_icon img {
+  height: 50px;
+}
+.title{
+    font-weight: bold;
 }
 
 .main_wrapper{
@@ -29,9 +53,7 @@ box-shadow: 10px 5px 10px solid black;
     flex: 1;
 }
 .action{
-    font-weight: bold;
     text-align: center;
-    background: white;
     padding: 10px;
     cursor: pointer;
     color:#2980b9;
