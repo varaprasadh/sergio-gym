@@ -28,12 +28,6 @@ export class Initializer extends Component {
                 viewBox="0 0 38 38" 
                 preserveAspectRatio="xMinYMin meet"
                 >
-                <text x="14" y="21" fontFamily="Monaco" fontSize="2px" style={{letterSpacing:"0.6"}} fill="grey">LOADING
-                    <animate 
-                    attributeName="opacity"
-                    values="0;1;0" dur="1.8s"
-                    repeatCount="indefinite"/>
-                </text>
                 <path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203
                     C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20
                     C34.797,11.841,28.159,5.203,20,5.203z">

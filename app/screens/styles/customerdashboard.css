@@ -1,0 +1,64 @@
+@font-face {
+  font-family: Lato;
+  src: url("../fonts/Lato/Lato-Black.ttf");
+}
+@font-face {
+  font-family: poppins;
+  src: url("../fonts/Poppins/Poppins-Black.ttf");
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: #ecf0f1;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: poppins;
+}
+.header{
+    padding: 30px 20px;
+    box-shadow: 0px 5px 10px solid black;
+    display: flex;
+}
+.header_icon {
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  font-family: Lato;
+  font-size: 30px;
+}
+
+.header_icon img {
+  height: 50px;
+}
+.title{
+    font-weight: bold;
+}
+
+.main_wrapper{
+    /* background: blue; */
+    flex:1;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+}
+.sidebar{
+   /* background:#34495e; */
+background: #fff;
+box-shadow: 10px 5px 10px solid black;
+}
+.control_area{
+    display: flex;
+    flex: 1;
+}
+.action{
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    color:#2980b9;
+}
+.action:hover{
+    background: #2ecc71;
+    color: #fff;
+}

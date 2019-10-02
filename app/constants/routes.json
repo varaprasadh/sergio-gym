@@ -1,5 +1,6 @@
-{
-  "LOGIN": "/login",
+{ 
+ 
+  "LOGIN": "/",
   "ADMIN_HOME": "/home_admin",
   "USER_HOME": "/home_user"
 }

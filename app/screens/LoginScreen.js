@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styles from "./styles/loginstyles.css";
 import {toast} from "react-toastify";
+import {Redirect} from 'react-router-dom';
+import routes from "../constants/routes";
 
 
 const connection=require('../dbhandler/connection').connection;
@@ -27,14 +29,27 @@ export class LoginScreen extends Component {
              let credintails=results[0];
              localStorage.setItem('AUTH',JSON.stringify(credintails));
              if(credintails.role==='admin'){
-
+                this.setState({
+                    roleAdminLoggedIN:true
+                });
+             }else{
+                this.setState({
+                    roleUserLoggedIN:true
+                });
              }
+             toast.success("loggin in..");
+         }else{
+             toast.error("login failed");
          }
-       });
-       
+       }); 
+        
     }
     render() {
+  
         return (
+            this.state.roleAdminLoggedIN?<Redirect to={routes.ADMIN_HOME}/>
+            :this.state.roleUserLoggedIN?<Redirect to={routes.USER_HOME}/>
+            :
             <div className={styles.container}>
                <div className={styles.wrapper}>
                 <form className={styles.box}>
@@ -49,4 +64,4 @@ export class LoginScreen extends Component {
     }
 }
 
-export default LoginScreen
+export default LoginScreen;

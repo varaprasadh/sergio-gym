@@ -74,7 +74,7 @@ export class AdminDashboard extends Component {
                   {this.state.users.length ?<div className={styles.userhead}>Users</div>:null}
                   <div className={styles.users}>
                       {
-                          this.state.users.map(user=><User onDelete={this.delete.bind(this)} user={user} key={user}/>)
+                          this.state.users.map((user,i)=><User onDelete={this.delete.bind(this)} user={user} key={i+''}/>)
                       }
                   </div>
                </div>
