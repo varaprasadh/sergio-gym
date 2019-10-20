@@ -13,8 +13,8 @@ export default () => (
   <App>
     <Switch>
         <Route path={routes.LOGIN} exact component={LoginScreen}/>
-        <Route path={routes.USER_HOME} exact component={CustomerDashboard}/>
-        <Route path={routes.ADMIN_HOME} exact component={AdminDashboard}/>
+        <Route path={routes.USER_HOME} component={CustomerDashboard}/>
+        <Route path={routes.ADMIN_HOME} component={AdminDashboard}/>
         {/* <Route component={Initializer}/> */}
     </Switch>
   </App>

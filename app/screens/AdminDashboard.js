@@ -4,6 +4,10 @@ import { toast } from 'react-toastify';
 const uuid=require('uuid');
 
 const connection=require('../dbhandler/connection').connection;
+import Header from "./components/Header";
+import {Redirect} from 'react-router-dom'
+import routes from "./../constants/routes";
+import SVGBackground from './components/SVGBackground';
 
 export class AdminDashboard extends Component {
     constructor(props){
@@ -11,7 +15,8 @@ export class AdminDashboard extends Component {
         this.state={
             users:[],
             username:'',
-            password:''
+            password:'',
+            logged_out:false
         }
     }
     componentWillMount(){
@@ -59,9 +64,26 @@ export class AdminDashboard extends Component {
         }
     
     }
+    logout(){
+        localStorage.clear();
+        this.setState({
+            logged_out:true
+        });
+    }
     render() {
+        let isLoggedout=this.state.logged_out;
+
         return (
+            isLoggedout?<Redirect to={routes.LOGIN}/>:
+            <SVGBackground>
             <div className={styles.container}>
+              <div className={styles.header}>
+                  <div className={styles.logo}><Header/></div>
+                  <div 
+                    className={styles.logout}
+                    onClick={this.logout.bind(this)}
+                    >Logout</div>
+              </div>
                <div className={styles.card}>
                    <div className={styles.cardlabel}>Create User</div>
                    <form>
@@ -79,6 +101,7 @@ export class AdminDashboard extends Component {
                   </div>
                </div>
             </div>
+            </SVGBackground>
         )
     }
 }
@@ -101,7 +124,7 @@ class User extends Component {
                     <span className={styles.label}>username:</span><span className={styles.value}>{username}</span>
                 </div>
                 <div>
-                    <span className={styles.label}>password:</span><span className={styles.value}>{password}</span>
+                    <span className={styles.label}>password :</span><span className={styles.value}>{password}</span>
                 </div>
                 <div className={styles.ctrl}>
                     <div className={styles.delete} onClick={this.delete.bind(this)}>delete</div>

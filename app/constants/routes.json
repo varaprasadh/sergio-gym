@@ -1,6 +1,6 @@
 { 
  
   "LOGIN": "/",
-  "ADMIN_HOME": "/home_admin",
+  "ADMIN_HOME": "/home_admin/:test",
   "USER_HOME": "/home_user"
 }

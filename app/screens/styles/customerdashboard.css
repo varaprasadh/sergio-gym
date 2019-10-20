@@ -11,15 +11,17 @@
   width: 100vw;
   height: 100vh;
   background: #ecf0f1;
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   font-family: poppins;
+
 }
 .header{
     padding: 30px 20px;
     box-shadow: 0px 5px 10px solid black;
     display: flex;
+    min-height: 50px;
 }
 .header_icon {
   height: 50px;
@@ -47,6 +49,8 @@
    /* background:#34495e; */
 background: #fff;
 box-shadow: 10px 5px 10px solid black;
+display: flex;
+flex-direction: column;
 }
 .control_area{
     display: flex;
@@ -58,7 +62,19 @@ box-shadow: 10px 5px 10px solid black;
     cursor: pointer;
     color:#2980b9;
 }
+.selected{
+  color: white;
+   background: #2ecc71;
+}
 .action:hover{
     background: #2ecc71;
     color: #fff;
+}
+
+.logout{
+  color: rgb(216, 42, 42);
+}
+.logout:hover{
+  background: rgb(216, 42, 42);
+  color: #fff;
 }

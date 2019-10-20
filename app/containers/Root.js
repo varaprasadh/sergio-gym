@@ -36,22 +36,7 @@ export default class Root extends Component<Props> {
             />  
             <Routes/>
             </div>
-      </ConnectedRouter> 
-            {/* <LoginScreen/>   */}
-            {/* <Initializer/>   */}
-            {/* <AdminDashboard/> */}
-             
-            {/* <Router path={routes.LOGIN}>  
-        
-                 <Switch path={routes.LOGIN}>
-                     <Route path={routes.LOGIN} exact component={LoginScreen} />
-                    <Route component={LoginScreen} />
-                    <Route component={Initializer} />
-                 </Switch>
-               
-            </Router> */}
-
-         
+      </ConnectedRouter>  
       </Provider>
     );
   }

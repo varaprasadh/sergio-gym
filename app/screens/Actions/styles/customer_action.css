@@ -1,0 +1,126 @@
+.container{
+    flex:1;
+    background: rgb(5, 29, 51);
+    position: relative;
+}
+.search_bar{
+    display: flex;
+    align-items: center;
+}
+.searchWrapper{
+    padding: 10px 20px;
+    background: white;
+    margin: 10px;
+    /* border: 2px solid rgb(15, 253, 7); */
+    border-radius: 10px;
+}
+.search_box{
+    border: none !important;
+    outline: none;
+}
+.search_icon {
+   cursor: pointer;
+}
+.search_icon:hover{
+    animation: search_icon_anime 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) 1;
+}
+
+@keyframes search_icon_anime{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(0.6);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+.customers{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding-bottom: 100px;
+    
+    /* height: 500px; */
+}
+.customers_wrapper{
+  
+  
+    
+}
+.customers_container{
+  overflow-y: scroll;
+   height:800px;
+   border: 2px solid rgb(4, 231, 231);
+   padding: 10px;
+   box-shadow: inset 0px 0px 85px #fff;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+}
+.customer{
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    max-width: 350px;
+    text-align: center;
+    overflow: hidden;
+    /* justify-self: stretch;    */
+}
+.customer_info{
+    letter-spacing: 1px;
+}
+.customer_info>div{
+    padding: 2px;
+}
+.customer:hover .controls{
+    transform: translateY(0px);
+}
+.pro_pic{
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+.pro_pic >img{
+    width: 100%;
+    height: 100%;
+}
+.active{
+    color: rgb(43, 173, 3);
+}
+.inactive {
+    color: rgb(226, 56, 4);
+}
+
+.controls{
+    display: flex;
+    justify-content: space-around;
+    transform: translateY(200px);
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.320, 1);
+}
+.controls>div{
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.modify_btn{
+    background:#08ca59;
+    flex: 1;
+}
+.modify_btn:hover{
+    background:#27ae60;
+}
+.remove_btn{
+    flex:1;
+    background: red;
+}
+.remove_btn:hover{
+     background: rgb(172, 3, 3);
+}

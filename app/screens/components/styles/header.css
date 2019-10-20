@@ -1,0 +1,22 @@
+.header {
+  padding: 30px 20px;
+  box-shadow: 0px 5px 10px solid black;
+  display: flex;
+  z-index:10;
+}
+
+.header_icon {
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  font-family: Lato;
+  font-size: 30px;
+}
+
+.header_icon img {
+  height: 50px;
+}
+
+.title {
+  font-weight: bold;
+}

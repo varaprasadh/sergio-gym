@@ -1,0 +1,49 @@
+.container{
+    background: rgb(6, 4, 37);
+    flex:1
+}
+.state_box{
+  background: white;
+  padding: 20px;
+  justify-content: space-around;
+  flex: 1;
+  margin: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  min-width:150px;
+ }
+
+.stats{
+    display: flex;
+    flex-wrap: wrap;  
+   
+}
+.stat_number{
+    color: #fff;
+    font-size: 2em;
+}
+.total{
+    background: rgb(241, 149, 2);
+}
+.active{
+  background: rgb(1, 185, 93);
+}
+.inactive{
+  background: rgb(226, 17, 2);
+}
+.stat_info{
+    font-weight:bold;
+    color: #fff;
+    text-align: center;
+}
+.anime_box{
+    display: flex;
+    flex:1;
+}
+.anime_box{
+    flex: 1;
+}

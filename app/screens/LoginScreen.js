@@ -3,6 +3,8 @@ import styles from "./styles/loginstyles.css";
 import {toast} from "react-toastify";
 import {Redirect} from 'react-router-dom';
 import routes from "../constants/routes";
+import Header from './components/Header';
+import SVGBackground from './components/SVGBackground';
 
 
 const connection=require('../dbhandler/connection').connection;
@@ -50,7 +52,9 @@ export class LoginScreen extends Component {
             this.state.roleAdminLoggedIN?<Redirect to={routes.ADMIN_HOME}/>
             :this.state.roleUserLoggedIN?<Redirect to={routes.USER_HOME}/>
             :
+            <SVGBackground>
             <div className={styles.container}>
+               <Header/>
                <div className={styles.wrapper}>
                 <form className={styles.box}>
                     <h1>Login</h1>
@@ -60,6 +64,7 @@ export class LoginScreen extends Component {
                 </form>
                </div>
             </div>
+            </SVGBackground>
         )
     }
 }
