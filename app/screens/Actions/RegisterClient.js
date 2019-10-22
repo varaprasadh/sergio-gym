@@ -72,7 +72,7 @@ export default class RegisterClient extends Component {
                readStream.pipe(fs.createWriteStream(filepath));
                this.setState({
                    imgsrc:null
-               })
+               });
             } 
             toast.success("please wait...");
 

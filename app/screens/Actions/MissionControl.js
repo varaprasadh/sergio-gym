@@ -1,15 +1,39 @@
 import React, { Component } from 'react'
 import styles from "./styles/missioncontrol.css";
 import GymActionSlider from '../components/GymActionSlider';
+import { connection } from '../../dbhandler/connection';
+const moment = require('moment');
 
 export class MissionControl extends Component {
     constructor(props){
         super(props);
         this.state={
-            total_clients:'123',
-            active_clients:'12',
-            inactive_clients:'45',
+            total_clients:'',
+            active_clients:'',
+            inactive_clients:'',
         }
+    }
+
+    componentWillMount(){
+       connection.query(`select * from clients`,(err,results)=>{
+          if(err) console.log(err);
+          this.setState({
+              total_clients:results.length
+          });
+          let _clients=results;
+          let _active=0;
+          let activeClients=_clients.filter(({plan_acivated_date,plan})=>{
+                    let planeActivated=moment(Number(plan_acivated_date+""));
+                    planeActivated.add(plan,'month');
+                    let isActive = planeActivated.isAfter(moment());
+                    return isActive;
+          });
+         console.log("activeclients",activeClients);
+         this.setState({
+             active_clients:activeClients.length,
+             inactive_clients:_clients.length-activeClients.length
+         })
+       });
     }
 
     render() {
@@ -42,7 +66,12 @@ export class MissionControl extends Component {
                       </div>
                   </div>
 
-              </div>     
+              </div> 
+              <div className={styles.about}>
+                <div>
+                   
+                </div>
+              </div>    
             </div>
         )
     }

@@ -13,6 +13,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { sendWhatsappMessages } from './screens/functions/MessageHandler';
 // import MenuBuilder from './menu';
 const path= require('path');
 
@@ -98,6 +99,19 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
+  ipcMain.on('send-whatsapp-messages',(event,numbers,message)=>{
+    sendWhatsappMessages(numbers,message).then(({success})=>{
+        console.log("status is fine")
+         event.sender.send('send-whatsapp-messages-status', {
+           success:true
+         });
+    }).catch((err)=>{
+      console.log("debug",err);
+       event.sender.send('send-whatsapp-messages-status', {
+         success: false
+       });
+    })
+  })
   // let editor=null;
 
 // ipcMain.on('open-profile-editor',(event,uid)=>{

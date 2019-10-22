@@ -1,6 +1,8 @@
 .container{
-    background: rgb(6, 4, 37);
-    flex:1
+    /* background: rgb(6, 4, 37); */
+    background: url("../../components/images/Flat_Mountains.svg");
+    background-size: cover;
+    flex:1;
 }
 .state_box{
   background: white;

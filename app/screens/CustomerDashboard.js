@@ -4,6 +4,7 @@ import styles from "./styles/customerdashboard.css";
 import MessageBox from './components/MessageBox';
 import RegisterClient from './Actions/RegisterClient';
 import CustomerAction from './Actions/CustomerAction';
+import Attendence from './Actions/Attendence';
 import Messenger from './Actions/Messenger';
 import MissionControl from './Actions/MissionControl';
 
@@ -23,8 +24,8 @@ export default class CustomerDashboard extends Component {
         super(props);
         this.state={
           selectedAction: {
-            id: 3,
-            component: CustomerAction
+            id: 4,
+            component: Attendence
           },
           actions:[
               {
@@ -43,7 +44,12 @@ export default class CustomerDashboard extends Component {
                  component: CustomerAction
               },
               {
-                id: 4,
+                 id:4,
+                 label:"Attendence",
+                 component: Attendence
+              },
+              {
+                id: 5,
                 label: "Messaging",
                 component: Messenger
               }

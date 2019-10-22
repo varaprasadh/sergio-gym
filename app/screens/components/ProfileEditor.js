@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from "./styles/profile_editor.css";
 import ModernDatepicker from 'react-modern-datepicker';
-import { getProfilepic } from '../functions/DPHandler';
+import { getProfilepic, setProfilePicture } from '../functions/DPHandler';
 import logo from "./images/running.svg"
 import { toast } from 'react-toastify';
 import Select from 'react-select';
@@ -16,17 +16,23 @@ export class ProfileEditor extends Component {
         super(props);
        this.handleDOBChange=this.handleDOBChange.bind(this);
        this.changePlanDate = this.changePlanDate.bind(this);
+       this.loadData = this.loadData.bind(this);
        this.state={
            _dob:'',
-           editable:false
+           editable:false,
+           isActive:false
        }
     }
     componentWillMount(){
-        let {uid}=this.props;
+        this.loadData();
+    }
+    loadData(){
+          let {uid}=this.props;
         connection.query(`select * from clients where uid='${uid}'`,(err,res)=>{
             if(err) throw err;
             let data=res[0];
             let {
+                uid,
                 firstname,
                 lastname,
                 dni,
@@ -38,6 +44,7 @@ export class ProfileEditor extends Component {
                 last_attended_date
             }=data;
             this.setState({
+                uid,
                 firstname,
                 lastname,
                 dni,
@@ -64,7 +71,8 @@ export class ProfileEditor extends Component {
             this.setState({
                 propic:logo
             })
-        })
+        });
+        
     }
     handleDOBChange(date) {
       let timestamp = Date.parse(date.split('-').reverse().join('-')) + "";
@@ -75,7 +83,30 @@ export class ProfileEditor extends Component {
       console.log("deg", date);
     }
     save(){
-        alert("saving....");
+       let {
+           uid,
+           firstname,
+           lastname,
+           dni,
+           mobile,
+           plan_acivated_date,
+           plan,
+           dob,
+           doj,
+       } = this.state;
+      if(/^\d{8}$/.test(dni)){
+           let values = [firstname, lastname, dni, mobile, plan_acivated_date, plan, dob]
+           connection.query(`update clients set firstname=?,lastname=?,dni=?,mobile=?,plan_acivated_date=?,plan=?,dob=? where uid='${uid}'`, values, (err, results) => {
+             if (err) toast.error("something went wrong,try again later");
+             else {
+               toast.success("profile save successfully");
+               this.props.onClose();
+             }
+
+           })
+      }else{
+          toast.error("fill up details correctly!");
+      } 
     }
     setprofilesrc({target}){
        console.log("debg",target.files);
@@ -87,24 +118,16 @@ export class ProfileEditor extends Component {
             this.setState({
                 propic: fr.result
             })
-            // let _file=files[0];
-            // let readStream = fs.createReadStream(_file.path);
-            // console.log(readStream);
-            // let filepath = path.join(__dirname, 'profilepics', this.state.uid + "." + _file.type.split('/')[1]);
-            // fs.unlink(filepath,err=>{
-            //     if(err) console.log(err);
-            //     readStream.pipe(fs.createWriteStream(filepath));
-            //     toast.success("profile pic changed");
-            // })
-         
+            let _file=files[0];
+            setProfilePicture(_file.path,this.state.uid+"."+_file.type.split('/')[1]).then(()=>{
+                toast.success("profile photo changed successfully");
+            }).catch(err=>{
+                toast.success("something went wrong,picture didn't updated")
+            });
            
         }
         fr.readAsDataURL(files[0]);
-
-
        }
-
-       
     }
    addMonths = (d, months) => {
      var fm = moment(d).add(months, 'M');
@@ -135,15 +158,16 @@ export class ProfileEditor extends Component {
         let currentPlan=this.state.plan==="6"?plans[0]:plans[1];
         let __expiredon = this.addMonths(moment(Number(this.state.plan_acivated_date + "")), Number(this.state.plan));
         let _expiredon = __expiredon.format("DD-MM-YYYY");
-        console.log("plan active tedsfsg",this.state.plan_acivated_date);
         let _planActivatedOn=moment(Number(this.state.plan_acivated_date+'')).format("DD-MM-YYYY");
-        console.log(_planActivatedOn,"boop bepe");
+        let isActive = __expiredon.isAfter(moment());
+        let join_date=moment(Number(this.state.doj+"")).format("DD-MM-YYYY");
+
         return (
            <div className={styles.editor}>
                   <div className={styles.editor_main}>
                      <div className={styles.title}>Edit Profile</div>
                      <div className={styles.main_data}>
-                         <div>
+                         <div className={styles.uploadimage}>
                              <div className={styles.image}>
                                 <img src={this.state.propic} alt="profile image" className={styles.pro_pic}/>
                              </div>
@@ -160,19 +184,30 @@ export class ProfileEditor extends Component {
                         <div className={styles.m_data}>
                             <div className={styles.c_input}>
                                 <label>Firstname</label>
-                                <input type="text" value={this.state.firstname}/>
+                                <input 
+                                   onChange={({target})=>{this.setState({firstname:target.value})}}
+                                   type="text" value={this.state.firstname}/>
                             </div>
+                           
                             <div className={styles.c_input}>
                                 <label>Lastname</label>
-                                <input type="text" value={this.state.lastname}/>
+                                <input 
+                                 onChange={({target})=>{this.setState({lastname:target.value})}}
+                                 type="text" value={this.state.lastname}/>
                             </div>
                             <div className={styles.c_input}>
                                 <label>Mobile</label>
-                                <input type="text" value={this.state.mobile}/>
+                                <input 
+                                maxLength={10}
+                                onChange={({target})=>{this.setState({mobile:target.value})}}
+                                type="number" value={this.state.mobile}/>
                             </div>
                             <div className={styles.c_input}>
                                 <label>DNI</label>
-                                <input type="text" value={this.state.dni}/>
+                                <input type="number" 
+                                maxLength={8}
+                                onChange={({target})=>{this.setState({dni:target.value})}}
+                                value={this.state.dni}/>
                             </div>
                             <div className={styles.c_input}>
                                 <label>Date of Birth</label>
@@ -184,29 +219,47 @@ export class ProfileEditor extends Component {
                                     placeholder={'Select a date'}
                                 />
                             </div>
+                             <div className={styles.c_input}>
+                                <label>Joined on</label>
+                                <div className={styles.plan_active}>{join_date}</div>
+                            </div>
                         </div>
                         <div className={styles.plan_controller}>
-                             <div className={styles.c_input}>
+                             
+                            <div className={styles.c_input}>
+                                <label>plan</label>
+                                <div className={styles.plan}>
+                                    <Select
+            
+                                        value={currentPlan}
+                                        onChange={this.handlePlanChange}
+                                        options={plans} />
+                                </div>
+                            </div>
+                            <div className={styles.c_input}>
                                 <label>Plan Activated On</label>
-                                <ModernDatepicker
+                                <div className={styles.date_picker}>
+                                    <ModernDatepicker
+                                   
                                     date={this.state._plan_acivated_date}
                                     format={'DD-MM-YYYY'}
                                     showBorder
                                     onChange={date=>this.changePlanDate(date)}
                                     placeholder={'Select a date'}
-                                />
-                            </div>
-                            <div className={styles.c_input}>
-                                <label>plan</label>
-                                <Select
-                                  value={currentPlan}
-                                   onChange={this.handlePlanChange}
-                                   options={plans} />
+                                   />
+                                </div>
                             </div>
                              <div className={styles.c_input}>
                                 <label>Expired By</label>
                                 <input type="text" disabled value={_expiredon}/>
                             </div>
+                            
+                             <div className={styles.c_input}>
+                                <label>Status</label>
+                                {isActive==true?<div className={styles.plan_active}>ACTIVE</div>
+                                :<div className={styles.plan_expired}>EXPIRED</div>}
+                            </div>
+                            
                         </div>
                      </div>
                      <div className={styles.controls}>

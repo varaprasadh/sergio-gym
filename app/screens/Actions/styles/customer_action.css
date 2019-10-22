@@ -1,8 +1,11 @@
 .container{
     flex:1;
-    background: rgb(5, 29, 51);
+    background: url("../../images/gym_register_bg.jpg");
+    background-size: cover;
     position: relative;
+    backdrop-filter: grayscale(1);
 }
+
 .search_bar{
     display: flex;
     align-items: center;
@@ -52,7 +55,7 @@
 .customers_container{
   overflow-y: scroll;
    height:800px;
-   border: 2px solid rgb(4, 231, 231);
+   /* border: 2px solid rgb(4, 231, 231); */
    padding: 10px;
    box-shadow: inset 0px 0px 85px #fff;
 }
@@ -69,6 +72,7 @@
     text-align: center;
     overflow: hidden;
     /* justify-self: stretch;    */
+    box-shadow:3px 5px 10px black;
 }
 .customer_info{
     letter-spacing: 1px;
@@ -78,6 +82,9 @@
 }
 .customer:hover .controls{
     transform: translateY(0px);
+}
+.customer_name{
+    color: rgb(9, 160, 4);
 }
 .pro_pic{
     width: 150px;
@@ -123,4 +130,27 @@
 }
 .remove_btn:hover{
      background: rgb(172, 3, 3);
+}
+
+.attended,
+.attend {
+    padding: 5px 10px;
+    background: #08ca59;
+    color: white;
+    border-radius: 5px;
+}
+.attend{
+  background: orange;
+  cursor: pointer;
+}
+.attend:hover{
+    background: rgb(197, 129, 1);
+}
+
+.row{
+    display: flex;
+    justify-content: space-around;
+}
+.red{
+    color: rgb(163, 16, 16);
 }

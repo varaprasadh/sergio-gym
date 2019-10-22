@@ -4,8 +4,6 @@ import styles from "./styles/customer_action.css";
 import {IoMdSearch} from "react-icons/io";
 import tempimage from "../images/man.png";
 import { toast } from 'react-toastify';
-import { ipcRenderer } from 'electron';
-import ProfileEditor from '../components/ProfileEditor';
 
 const connection = require("../../dbhandler/connection").connection;
 const moment=require('moment');
@@ -87,18 +85,12 @@ export class CustomerAction extends Component {
                          <div className={styles.customers}>
                              {this.state.customers.map((obj,i)=>{
                              return <Customer 
-                                 onRemove={uid=>this.onRemove(uid)}
-                                 onView={uid=>this.onView(uid)}
                                  data={obj} key={i}/>
                              })}
                          </div>
                       </div>
                   </div>
               </div>
-              {this.state.showEditor?<ProfileEditor 
-                      onClose={this.closeEditor.bind(this)}
-                      uid={this.state.selected_uid}/>
-               :null}
             </div>
         )
     }
@@ -106,8 +98,19 @@ export class CustomerAction extends Component {
 class Customer extends Component{
     constructor(props){
           super(props);
+           let {data}=this.props;
+            let {
+              uid,
+              firstname,
+              lastname,
+              dni,
+              plan_acivated_date,
+              plan,
+              last_attended_date
+            } = data;
           this.state={
-              propic:null
+              propic:null,
+              uid, firstname, lastname, dni, plan_acivated_date, plan, last_attended_date
           }
     }
     componentWillMount(){
@@ -117,11 +120,36 @@ class Customer extends Component{
          //TODO DO NOTHING FOR NOW.
       });
     }
-    render(){
-       let {data}=this.props;
-       let {uid,firstname,lastname,dni,plan_acivated_date,plan}=data;
-       let planeActivated=moment(Number(plan_acivated_date));
+    markAttendence(){
+        let _uid=this.props.data.uid;
+        let timestamp=Date.now();
+      connection.query(`update clients set last_attended_date=${timestamp} where uid='${_uid}' `,(err,result)=>{
+          if(err){
+            toast.error("something went wrong,try again later");
+          }
+          else{
+            toast.success("given attendence for today");
+            this.setState({
+                last_attended_date:timestamp
+            });
+          }
+      })
       
+    }
+    render(){
+      
+       let {
+         uid,
+         firstname,
+         lastname,
+         dni,
+         plan_acivated_date,
+         plan,
+         last_attended_date
+       } = this.state;
+       let planeActivated=moment(Number(plan_acivated_date));
+       let _last_attended=last_attended_date!=null?moment(Number(last_attended_date+"")).format("DD-MM-YYYY"):"not available";
+       let _isAttendedToday=_last_attended===moment().format('DD-MM-YYYY');
        console.log(planeActivated.calendar(),"plane activated on");
        planeActivated.add(plan,'month');
        let isActive = planeActivated.isAfter(moment());
@@ -136,16 +164,16 @@ class Customer extends Component{
                     <div className={styles.customer_name}>{firstname+" "+lastname}</div>
                     <div className={styles.customer_dni}>{dni}</div>
                 </div>
-                <div className={styles.planStatus}>
-                  {
-                    isActive?<div className={styles.active}>PLAN IS ACTIVE</div>:
-                    <div className={styles.inactive}>PLAN EXPIRED</div>
-                  } 
-
+                <div className={styles.row}>
+                    <div>last attended on</div>
+                    <div className={styles.red}>{_last_attended}</div>
                 </div>
-                <div className={styles.controls}>
-                   <div onClick={()=>this.props.onRemove(uid)} className={styles.remove_btn}>REMOVE</div>
-                   <div onClick={()=>this.props.onView(uid)} className={styles.modify_btn}>VIEW</div>
+                <div className="S">
+                   {!_isAttendedToday?<div
+                        onClick={this.markAttendence.bind(this)}
+                        className={styles.attend}>MARK ATTENDENCE</div>
+                   : <div className={styles.attended}>ATTENDED TODAY</div> 
+                   }
                 </div>
             </div>
         )

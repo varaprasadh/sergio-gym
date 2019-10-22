@@ -1,0 +1,112 @@
+.container{
+    background:#fff;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border:1px solid mediumslateblue;
+}
+.search_control{
+    
+}
+.wrapper{
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+.searchHandler{
+    padding:5px;
+    border: 2px solid rgb(2, 9, 22);
+    border-radius: 10px;
+}
+.search_control{
+    display: flex;    
+}
+.search_control>div{
+    flex: 1;
+    max-width: 250px;
+    margin: 10px;
+}
+.searchinput{
+    padding: 10px;
+    border: none;
+}
+.msg_input{
+    height: 150px;
+    width: 100%;
+    resize: none;
+    padding: 10px;
+}
+.messageType label{
+    margin: 20px 0px;
+    color: rgb(2, 131, 2);
+}
+.send_btn{
+    padding: 10px 20px;
+    background: rgb(4, 190, 4);
+    width: 100px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.send_btn:hover{
+    background: rgb(3, 134, 3);
+}
+.align_end{
+    display: flex;
+    justify-content: flex-end;
+}
+.clients{
+    overflow: scroll;
+    height:700px;
+    padding: 10px;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+}
+.clients_wrapper{
+    padding: 5px 10px;
+    min-width: 250px;
+}
+.clients_wrapper_label{
+    color: rgb(6, 25, 37);
+}
+.client_card{
+    background: white;
+    box-shadow: 5px 5px 10px black;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: sans-serif !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+}
+.row label{
+   font-weight: bold;
+   padding:5px 10px;
+}
+input[type="checkbox"]{
+    width:30px;
+    height: 30px;
+}
+.row
+{
+    display: flex;
+    align-items: center;
+}
+.clients_control{
+    display: flex;
+}
+.title{
+    font-size: 2.2em;
+}
+@media screen and (max-width:1000px){
+    .wrapper{
+        flex-direction: column-reverse;
+    }
+    .clients{
+        height: 500px;
+    }
+}
