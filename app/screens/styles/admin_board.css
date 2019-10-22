@@ -1,27 +1,54 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background:#273c75;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
+  font-family: sans-serif !important;
 }
 * {
   font-size: 14px;
 }
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 20px;
+}
+.logo{
+  margin-right: auto;
+}
+.logout{
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  align-self: flex-start;
+  background: #e74c3c;
+  padding: 10px 20px;
+  border-radius:10px 0px 10px 0px;
+  margin: 10px 0px;
+  transition: all 0.5s linear;
+
+}
+
+.logout:hover{
+  filter: drop-shadow(2px 2px 3px black);
+}
 .card {
   width:400px;
-  height:150px ;
+  /* height:150px ; */
   text-align: center;
-  background-color: white;
+  background-color: rgb(26, 6, 44);
   border-radius: 5px;
   box-shadow: 0 3px 3px silver;
   padding: 25px;
   margin: 10px;
+  align-self: center;
 }
 .scard{
-   background-color: white;
+   background-color: rgb(15, 7, 53);
    border-radius: 5px;
    box-shadow: 0 3px 3px silver;
    padding: 25px;
@@ -33,9 +60,13 @@
   outline: none;
   border: none;
   border-bottom: 1px solid #2980b9;
+  color: #fff;
 }
 .card input:focus {
 outline: none;
+}
+.card input::placeholder{
+  color: #fff;
 }
 .submit {
   background: #27ae60;
@@ -52,8 +83,8 @@ outline: none;
 }
 .cardlabel{
   font-weight: bold;
-  font-family: sans-serif;
-  color: #27ae60;
+  font-size: 1.2em;
+  color: #00ff6a;
   padding: 10px;
 }
 .user_section{
@@ -73,19 +104,21 @@ outline: none;
 }
 .label{
   font-weight: bold;
-  color:#2980b9;
+  color:#01e1ff;
   padding: 5px 10px;
+  font-size: 1.2em;
+  text-transform: capitalize;
 }
 .value{
   font-weight: bold;
   font-size: 1.2em;
   padding: 5px 10px;
-  color: #2c3e50;
+  color: #ffffff;
 }
 .userhead{
  font-weight: bold;
  font-size: 2em;
- color:#fff;
+ color:rgb(5, 42, 66);
  padding: 10px;
 }
 .ctrl{

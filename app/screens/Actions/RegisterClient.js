@@ -4,8 +4,19 @@ import {
   IoMdHappy
 } from "react-icons/io";
 import manicon from "../images/man.png";
+import { toast } from 'react-toastify';
+import Initializer from '../Initializer';
+
+import ModernDatepicker from 'react-modern-datepicker';
 
 const moment=require('moment');
+
+const fs=require('fs');
+const path=require('path');
+
+const uuid=require('uuid');
+
+const connection=require('../../dbhandler/connection').connection;
 
 
 export default class RegisterClient extends Component {
@@ -17,22 +28,72 @@ export default class RegisterClient extends Component {
              mobile:'',
              dni:'',
              genderMale:true,
+             dob:'',
              plan:null,
-             expiredon:''
+             expiredon:'',
+             imgsrc: null
          }
+         this.handleDOBChange=this.handleDOBChange.bind(this);
      }
     
     createUser(){
-           console.log(this.state);
+         let { firstname,lastname,mobile,dni,genderMale,plan,imgsrc,dob}=this.state;
+         console.log(this.state);
+
+         let doj = Date.now();
+         let uid = uuid();
+         let plan_activatedOn = doj;
+
+         if(firstname.trim()!=''&& lastname.trim()!='' && /^\d{10}$/.test(mobile) && /^\d{8}$/.test(dni) && plan && plan.trim()!=''&& dob.trim()!=''){
+            this.setState({
+              loading: true
+            });
+
+            let gender=genderMale?"male":"female";
+            connection.query(`insert into clients values ('${uid}','${firstname}','${lastname}','${mobile}','${dni}','${dob}','${doj}',${plan_activatedOn},null,'${gender}','${plan}')`,(err,result)=>{
+                if(err) throw err;
+                console.log(result);
+                toast.success('account created!');
+                setTimeout(()=>{
+                    this.setState({
+                      loading: false,
+                      _dob:''
+                    })
+                },1500);
+            })
+            if(imgsrc==null){
+                toast.warn("profile image not choosen.. you can upload it later");
+            }
+            else{
+               let readStream = fs.createReadStream(this.state.file.path);
+               console.log(readStream);
+               let filepath = path.join(__dirname, 'profilepics', uid + "." + this.state.file.type.split('/')[1]);
+               console.log(filepath);
+               readStream.pipe(fs.createWriteStream(filepath));
+               this.setState({
+                   imgsrc:null
+               });
+            } 
+            toast.success("please wait...");
+
+               
+         }else{
+             
+             toast.error("fill the details correctly");
+         }
     }
     setprofilesrc({target}){
        console.log("debg",target.files);
        let files = target.files;
+       console.log(files[0]);
        if(files && files.length){
           let fr=new FileReader();
           fr.onload = ()=> {
             this.setState({
                 imgsrc: fr.result
+            })
+            this.setState({
+                file:files[0]
             })
         }
         fr.readAsDataURL(files[0]);
@@ -44,19 +105,32 @@ export default class RegisterClient extends Component {
       return d.date() != fm.date() && fm.isSame(fmEnd.format('YYYY-MM-DD')) ? fm.add(1, 'd') : fm;
     }
     membershipChange(e){
-         console.log(e.target.value);
-         
-         let months = e.target.value;
-         let expiry = this.addMonths(moment(),months);
-         let expiredon = expiry.format().split('T')[0].split('-').reverse().join('-');
-         this.setState({
-             expiredon
-         });
-
+        if (e.target.value.trim()!=''){
+           let months = e.target.value;
+           let expiry = this.addMonths(moment(), months);
+           let expiredon = expiry.format().split('T')[0].split('-').reverse().join('-');
+           this.setState({
+             expiredon,
+             plan:months
+           });
+        }else{
+            this.setState({
+                expiredon:''
+            })
+        }
+    }
+    handleDOBChange(date){
+        let timestamp=Date.parse(date.split('-').reverse().join('-'))+"";
+        this.setState({ 
+            dob:timestamp,
+            _dob:date
+        });
+        console.log("deg",date);
     }
     render() {
         let expiry=this.state.expiredon.trim()!='';
         return (
+            this.state.loading?<Initializer/>:
             <div className={styles.container}>
                 <div className={styles.model}> 
                     <div className={styles.card}>
@@ -82,6 +156,16 @@ export default class RegisterClient extends Component {
                     </div>
                     <div className={styles.input_group}>
                         <input type="number" placeholder="DNI" onChange={({target})=>{this.setState({dni:target.value})}}/>
+                    </div>    
+                    <div className={styles.input_group+" "+styles.showtop}>
+                       <div>Date of Birth:</div>
+                        <ModernDatepicker
+                            date={this.state._dob}
+                            format={'DD-MM-YYYY'}
+                            showBorder
+                            onChange={date => this.handleDOBChange(date)}
+                            placeholder={'Select a date'}
+                        />
                     </div>    
                     <div className={styles.gender}>
                         <div className={styles.row}>

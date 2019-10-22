@@ -266,15 +266,18 @@
     "react-dom": "^16.6.3",
     "react-hot-loader": "^4.3.12",
     "react-icons": "^3.7.0",
+    "react-modern-datepicker": "^1.1.0",
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-select": "^2.0.0-beta.7",
     "react-toastify": "^5.4.0",
     "reactstrap": "^8.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.9",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "twilio": "^3.35.0"
   },
   "devEngines": {
     "node": ">=7.x",
