@@ -14,10 +14,17 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { sendWhatsappMessages } from './screens/functions/MessageHandler';
+
+const electron=require('electron');
+
 // import MenuBuilder from './menu';
 const path= require('path');
 
 require("./dbhandler/connection").connection;
+
+
+ const userDataPath = (electron.app || electron.remote.app).getPath('userData');
+ console.log("user data path",userDataPath);
 
 export default class AppUpdater {
   constructor() {
@@ -75,7 +82,8 @@ app.on('ready', async () => {
     show: false,
     width: 1024,
     height: 728,
-    title:"Imperium Fitness Gym"
+    title:"Imperium Fitness Gym",
+    icon: path.join(__dirname, "icons", "png", "64x64.png")
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

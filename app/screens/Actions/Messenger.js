@@ -5,12 +5,18 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { sendWhatsappMessages } from '../functions/MessageHandler';
 import { ipcRenderer } from 'electron';
+
+
+import {Calendar} from 'react-calendar-component';
+import 'moment/locale/nb';
+
+import crStyles from "./styles/calender_styles.css"
 const moment = require('moment');
+
 
 const connection=require("../../dbhandler/connection").connection;
 
  
-
 
 export class Messenger extends Component {
     constructor(props){
@@ -167,6 +173,9 @@ export class Messenger extends Component {
                             options={plans} />
                     </div>
                 </div>
+                <div className={crStyles.calendar}>
+                    <CalendarExample/>
+                </div>
                 <div className={styles.messageBox}>
                     <label>Message</label>
                     <div>
@@ -225,4 +234,50 @@ class ClientCard extends Component{
     }
 }
 
+
 export default Messenger;
+
+
+class CalendarExample extends Component {
+  state = {
+    date: moment()
+  };
+ 
+  cx(classnames){
+      console.log(classnames);
+      return 'Calendar-grid-item';
+  }
+  render() {
+    return (
+     <div className={crStyles.Calendar_grid}>
+      <Calendar
+        onChangeMonth={date => this.setState({ date })}
+        date={this.state.date}
+        onPickDate={date => console.log(date)}
+        renderDay={({ day, classNames, onPickDate }) => (
+          <div
+            key={day.format()}
+            className={this.cx(
+              crStyles.Calendar_grid_item,
+              day.isSame(moment(), 'day') && crStyles.Calendar_grid_item_current,
+            )}
+            onClick={e => onPickDate(day)}
+          >
+            {day.format('D')}
+          </div>
+        )
+        }
+        renderHeader={({ date, onPrevMonth, onNextMonth }) => (
+          <div className={crStyles.Calendar_header}>
+            <button onClick={onPrevMonth}>«</button>
+            <div className={crStyles.Calendar_header_currentDate}>
+              {date.format('MMMM YYYY')}
+            </div>
+            <button onClick={onNextMonth}>»</button>
+          </div>
+        )}
+      />
+       </div>
+    );
+  }
+}
