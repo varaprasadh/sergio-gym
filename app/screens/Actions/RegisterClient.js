@@ -31,27 +31,30 @@ export default class RegisterClient extends Component {
              dob:'',
              plan:null,
              expiredon:'',
-             imgsrc: null
+             imgsrc: null,
+             c_code:"+51"
          }
          this.handleDOBChange=this.handleDOBChange.bind(this);
      }
     
     createUser(){
-         let { firstname,lastname,mobile,dni,genderMale,plan,imgsrc,dob}=this.state;
+         let { firstname,lastname,c_code,mobile,dni,genderMale,plan,imgsrc,dob}=this.state;
          console.log(this.state);
 
          let doj = Date.now();
          let uid = uuid();
          let plan_activatedOn = doj;
 
-         if(firstname.trim()!=''&& lastname.trim()!='' && /^\d{10}$/.test(mobile) && /^\d{8}$/.test(dni) && plan && plan.trim()!=''&& dob.trim()!=''){
+         if(firstname.trim()!=''&& lastname.trim()!='' && /^\d{8,10}$/.test(mobile) &&/^\+\d\d$/.test(c_code)&& /^\d{8}$/.test(dni) && plan && plan.trim()!=''&& dob.trim()!=''){
             this.setState({
               loading: true
             });
 
             let gender=genderMale?"male":"female";
-            connection.query(`insert into clients values ('${uid}','${firstname}','${lastname}','${mobile}','${dni}','${dob}','${doj}',${plan_activatedOn},null,'${gender}','${plan}')`,(err,result)=>{
-                if(err) throw err;
+            connection.query(`insert into clients values ('${uid}','${firstname}','${lastname}','${c_code}${mobile}','${dni}','${dob}','${doj}',${plan_activatedOn},null,'${gender}','${plan}')`,(err,result)=>{
+                if(err) {
+                    toast.error("something went wrong try again later");
+                };
                 console.log(result);
                 toast.success('account created!');
                 setTimeout(()=>{
@@ -151,8 +154,19 @@ export default class RegisterClient extends Component {
                     <div className={styles.input_group}>
                         <input type="text" onChange={({target})=>{this.setState({lastname:target.value})}} placeholder="Last Name"/>
                     </div>
-                    <div className={styles.input_group}>
-                        <input type="number" onChange={({target})=>{this.setState({mobile:target.value})}} placeholder="Mobile"/>
+                    <div className={styles.input_group+" "+styles.row}>
+                        <div className={styles.country_code}>
+                             <input type="text" pattern="\d*" 
+                               onChange={({target})=>{this.setState({c_code:target.value})}} 
+                               placeholder="country code"
+                               value={this.state.c_code} maxLength="3"/>
+                        </div>
+                        <div className={styles.mobile}>
+                            <input type="number"
+                                onChange={({target})=>{this.setState({mobile:target.value})}} 
+                                placeholder="Mobile"/>
+                        </div>
+                        
                     </div>
                     <div className={styles.input_group}>
                         <input type="number" placeholder="DNI" onChange={({target})=>{this.setState({dni:target.value})}}/>

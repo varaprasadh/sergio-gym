@@ -9,13 +9,7 @@ const moment = require('moment');
 
 const connection=require("../../dbhandler/connection").connection;
 
- ipcRenderer.once('send-whatsapp-messages-status', (event, reply) => {
-   if (reply.success == true) {
-     toast.success("messages has been sent");
-   } else {
-     toast.error("oops, something went wrong,messages may not be sent")
-   }
- });
+ 
 
 
 export class Messenger extends Component {
@@ -99,9 +93,19 @@ export class Messenger extends Component {
     
       if(_message.trim()!=''){
         ipcRenderer.send('send-whatsapp-messages', numbers, _message);
+         ipcRenderer.once('send-whatsapp-messages-status', (event, reply) => {
+           if (reply.success == true) {
+             toast.success("messages has been sent");
+           } else {
+             toast.error("oops, something went wrong,messages may not be sent")
+           }
+         });
+
       }else{
           toast.error("choose receivers and write valid message");
       }
+     
+
     }
     render() {
 
