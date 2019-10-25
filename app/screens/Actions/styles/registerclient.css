@@ -82,7 +82,12 @@ input::placeholder {
   color: #1fd086;
   margin-bottom: 20px;
 }
-
+.country_code{
+ flex: 1;
+}
+.mobile{
+  flex: 4;
+}
 input:focus,
 textarea:focus,
 select:focus {

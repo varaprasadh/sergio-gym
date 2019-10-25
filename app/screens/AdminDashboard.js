@@ -89,7 +89,7 @@ export class AdminDashboard extends Component {
                    <form>
                        <div><input onChange={({target})=>this.setState({username:target.value})} type="text" placeholder="username"/></div>
                        <div><input  onChange={({target})=>this.setState({password:target.value})} type="password" placeholder="password"/></div>
-                       <div><input type="submit" onClick={this.createUser.bind(this)} className={styles.submit} value="create user"/></div>
+                       <div><input type="submit" onSubmit={e=>e.preventDefault()} onClick={this.createUser.bind(this)} className={styles.submit} value="create user"/></div>
                    </form>
                </div>
                <div className={styles.user_section}>

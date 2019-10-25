@@ -94,7 +94,7 @@ export class ProfileEditor extends Component {
            dob,
            doj,
        } = this.state;
-      if(/^\d{8}$/.test(dni)){
+      if(/^\d{8}$/.test(dni) && /^\+\d\d\d{8,10}$/.test(mobile)){
            let values = [firstname, lastname, dni, mobile, plan_acivated_date, plan, dob]
            connection.query(`update clients set firstname=?,lastname=?,dni=?,mobile=?,plan_acivated_date=?,plan=?,dob=? where uid='${uid}'`, values, (err, results) => {
              if (err) toast.error("something went wrong,try again later");
@@ -102,7 +102,6 @@ export class ProfileEditor extends Component {
                toast.success("profile save successfully");
                this.props.onClose();
              }
-
            })
       }else{
           toast.error("fill up details correctly!");
@@ -198,9 +197,9 @@ export class ProfileEditor extends Component {
                             <div className={styles.c_input}>
                                 <label>Mobile</label>
                                 <input 
-                                maxLength={10}
+                                maxLength={13}
                                 onChange={({target})=>{this.setState({mobile:target.value})}}
-                                type="number" value={this.state.mobile}/>
+                                type="text" value={this.state.mobile}/>
                             </div>
                             <div className={styles.c_input}>
                                 <label>DNI</label>

@@ -5,18 +5,19 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { sendWhatsappMessages } from '../functions/MessageHandler';
 import { ipcRenderer } from 'electron';
+import ModernDatepicker from 'react-modern-datepicker';
+
+
+import {Calendar} from 'react-calendar-component';
+import 'moment/locale/nb';
+
+import crStyles from "./styles/calender_styles.css"
 const moment = require('moment');
+
 
 const connection=require("../../dbhandler/connection").connection;
 
- ipcRenderer.once('send-whatsapp-messages-status', (event, reply) => {
-   if (reply.success == true) {
-     toast.success("messages has been sent");
-   } else {
-     toast.error("oops, something went wrong,messages may not be sent")
-   }
- });
-
+ 
 
 export class Messenger extends Component {
     constructor(props){
@@ -99,9 +100,35 @@ export class Messenger extends Component {
     
       if(_message.trim()!=''){
         ipcRenderer.send('send-whatsapp-messages', numbers, _message);
+         ipcRenderer.once('send-whatsapp-messages-status', (event, reply) => {
+           if (reply.success == true) {
+             toast.success("messages has been sent");
+           } else {
+             toast.error("oops, something went wrong,messages may not be sent")
+           }
+         });
+
       }else{
           toast.error("choose receivers and write valid message");
       }
+     
+
+    }
+    setBirthday(date){
+      console.log(date);
+      this.setState({
+        _birthday:date
+      });
+      let _filterred=this.state.clients.filter(({dob})=>{
+                let _dob=moment(Number(dob+"")).format("DD-MM");
+                console.log(_dob,"hehe");
+                let now=moment(date,"DD-MM").format("DD-MM");
+                return _dob===now;
+            });
+            console.log("birthday bioys", _filterred);
+            this.setState({
+                filtered_clients:_filterred
+        });
     }
     render() {
 
@@ -163,6 +190,19 @@ export class Messenger extends Component {
                             options={plans} />
                     </div>
                 </div>
+                {
+                  this.state.type && this.state.type.value == 0 && (
+                  <div>
+                    <div>Choose Day</div>
+                    <ModernDatepicker
+                            date={this.state._birthday}
+                            format={'DD-MM'}
+                            showBorder
+                            onChange={this.setBirthday.bind(this)}
+                            placeholder={'Select a date'}
+                    />
+                </div> )
+                }
                 <div className={styles.messageBox}>
                     <label>Message</label>
                     <div>
@@ -221,4 +261,6 @@ class ClientCard extends Component{
     }
 }
 
+
 export default Messenger;
+
