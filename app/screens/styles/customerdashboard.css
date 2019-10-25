@@ -56,6 +56,7 @@ flex-direction: column;
 .control_area{
     display: flex;
     flex: 1;
+    overflow:auto;
 }
 .action{
     text-align: center;
