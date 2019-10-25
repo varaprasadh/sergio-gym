@@ -62,13 +62,8 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
-/**
- * Add event listeners...
- */
-
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
+
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -86,7 +81,10 @@ app.on('ready', async () => {
     frame: false,
     width: 500,
     height: 350,
-    show: false
+    show: false,
+    webPreferences: {
+      devTools: false
+    }
   });
 
   splash.loadURL(`file://${__dirname}/splash.html`)
@@ -104,7 +102,10 @@ splash.on('closed', () => {
        width: 1024,
        height: 728,
        title: "Imperium Fitness Gym",
-       icon: path.join(__dirname, "icons", "png", "64x64.png")
+       icon: path.join(__dirname, "icons", "png", "64x64.png"),
+       webPreferences:{
+         devTools:false
+       }
      });
      mainWindow.loadURL(`file://${__dirname}/app.html`);
      splash.close();
@@ -121,7 +122,7 @@ splash.on('closed', () => {
        }
      });
 
- },3000);
+ },2000);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -142,11 +143,6 @@ splash.on('closed', () => {
     })
   })
 
- 
   mainWindow.setMenu(null);
 
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  // new AppUpdater();
 });
