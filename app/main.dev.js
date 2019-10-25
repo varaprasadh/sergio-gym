@@ -36,6 +36,10 @@ export default class AppUpdater {
 
 let mainWindow = null;
 
+let splash;
+
+
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -78,35 +82,51 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728,
-    title:"Imperium Fitness Gym",
-    icon: path.join(__dirname, "icons", "png", "64x64.png")
+  splash= new BrowserWindow({
+    frame: false,
+    width: 500,
+    height: 350,
+    show: false
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  splash.loadURL(`file://${__dirname}/splash.html`)
+  splash.on("ready-to-show", () => {
+    splash.show();
+  })
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  
-  
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-      mainWindow.focus();
-    }
-  });
+splash.on('closed', () => {
+  splash = null;
+});
+
+ setTimeout(()=>{
+     mainWindow = new BrowserWindow({
+       show: false,
+       width: 1024,
+       height: 728,
+       title: "Imperium Fitness Gym",
+       icon: path.join(__dirname, "icons", "png", "64x64.png")
+     });
+     mainWindow.loadURL(`file://${__dirname}/app.html`);
+     splash.close();
+
+     mainWindow.webContents.on('did-finish-load', () => {
+       if (!mainWindow) {
+         throw new Error('"mainWindow" is not defined');
+       }
+       if (process.env.START_MINIMIZED) {
+         mainWindow.minimize();
+       } else {
+         mainWindow.show();
+         mainWindow.focus();
+       }
+     });
+
+ },3000);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  
 
   ipcMain.on('send-whatsapp-messages',(event,numbers,message)=>{
     sendWhatsappMessages(numbers,message).then(({success})=>{
@@ -121,31 +141,10 @@ app.on('ready', async () => {
        });
     })
   })
-  // let editor=null;
 
-// ipcMain.on('open-profile-editor',(event,uid)=>{
-
-//   editor=new BrowserWindow({
-//     width:600,
-//     height:600,
-//     modal:true,
-//     parent:mainWindow,
-    
-//   });
-//   editor.loadFile(path.join(__dirname,"profile_editor.html"));
-//   editor.on('ready-to-show',()=>{
-//     editor.show();
-//     editor.webContents.send('get-uid', uid);
-//   })
  
+  mainWindow.setMenu(null);
 
-// })
- 
-
-  // mainWindow.setMenu(null);
-  
-  // const menuBuilder = new MenuBuilder(mainWindow);
-  // menuBuilder.buildMenu();
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

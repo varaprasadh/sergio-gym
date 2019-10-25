@@ -24,8 +24,8 @@ export default class CustomerDashboard extends Component {
         super(props);
         this.state={
           selectedAction: {
-            id: 5,
-            component: Messenger
+            id: 1,
+            component: MissionControl
           },
           actions:[
               {
