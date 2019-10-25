@@ -1,6 +1,11 @@
 
-const accountSid = "AC0692202b8b98c4093988b08c8fb34612";
-const authToken = "0bf4242745d06aec454c9bf0ce754e72";
+//sergio account api keys
+// const accountSid = "AC0692202b8b98c4093988b08c8fb34612";
+// const authToken = "0bf4242745d06aec454c9bf0ce754e72";
+
+
+const accountSid = "AC4ccb834f40a4ca77e3d37f2e0fc086b8";
+const authToken = "df75cae4a8b644a1bb68eaae269dbb31";
 
 const client = require('twilio')(accountSid, authToken);
 

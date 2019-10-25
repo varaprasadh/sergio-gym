@@ -103,9 +103,9 @@ splash.on('closed', () => {
        height: 728,
        title: "Imperium Fitness Gym",
        icon: path.join(__dirname, "icons", "png", "64x64.png"),
-       webPreferences:{
-         devTools:false
-       }
+      //  webPreferences:{
+      //    devTools:false
+      //  }
      });
      mainWindow.loadURL(`file://${__dirname}/app.html`);
      splash.close();
@@ -121,12 +121,13 @@ splash.on('closed', () => {
          mainWindow.focus();
        }
      });
-
+      mainWindow.on('closed', () => {
+        mainWindow = null;
+      });
+     mainWindow.setMenu(null);
  },2000);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+ 
   
 
   ipcMain.on('send-whatsapp-messages',(event,numbers,message)=>{
@@ -143,6 +144,6 @@ splash.on('closed', () => {
     })
   })
 
-  mainWindow.setMenu(null);
+  
 
 });

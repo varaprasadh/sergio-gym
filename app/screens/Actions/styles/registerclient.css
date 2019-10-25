@@ -6,6 +6,7 @@
     background: url("../../images/gym_register_bg.jpg");
     /* background: rgb(0, 21, 44); */
     background-size: cover;
+    overflow: scroll;
 
 }
 
